@@ -7,8 +7,7 @@ pipeline {
 
         stage('Get Code') {
            steps {
-              git 'https://github.com/mnieto1973/helloworld-master'
-              
+              git branch: 'develop', url: 'https://github.com/mnieto1973/helloworld-master'
            }
         }
         stage('Build') {
