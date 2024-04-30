@@ -5,7 +5,7 @@
   },
   "response": {
     "status": 200,
-    "body": "4",
+    "body": "4.0",
     "headers": {
         "Content-Type": "text/plain",
         "Access-Control-Allow-Origin": "*"
