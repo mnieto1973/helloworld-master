@@ -45,10 +45,10 @@ class TestCalculate(unittest.TestCase):
         self.assertRaises(TypeError, self.calc.divide, 2, "2")
         self.assertRaises(TypeError, self.calc.divide, "2", "2")
         self.assertRaises(TypeError, self.calc.divide, 2, 0)
-        
+
     def test_divide_method_returns_correct_result(self):
-        self.assertEqual(2, self.calc.divide, 8, 2)
-        self.assertEqual(5, self.calc.divide, 15, 3)
+        self.assertEqual(2, self.calc.divide( 8, 2))
+        self.assertEqual(5, self.calc.divide( 15, 3))
 
     def test_multiply_method_returns_correct_result(self):
         self.assertEqual(4, self.calc.multiply(2, 2))
