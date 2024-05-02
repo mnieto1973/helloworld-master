@@ -37,19 +37,23 @@ class TestApi(unittest.TestCase):
        
     def test_api_divide_cero(self):
         url = f"{BASE_URL}/calc/divide/6/0"
-        response = urlopen(url, timeout=DEFAULT_TIMEOUT)
-        self.assertEqual(
-            response.status, 406, f"La petición API a {url} debería devolver un código de respuesta 406"
-        )
-       
-    def test_api_multiply(self):
-        url = f"{BASE_URL}/calc/multiply/8/2"
+      
         try:
             response = urlopen(url, timeout=DEFAULT_TIMEOUT)
         except http.client.HTTPError as e:
             response = e
         self.assertEqual(
             response.status, 406, f"La petición API a {url} debería devolver un código de respuesta 406"
+        )
+       
+    def test_api_multiply(self):
+        url = f"{BASE_URL}/calc/multiply/8/2"
+        response = urlopen(url, timeout=DEFAULT_TIMEOUT)
+        self.assertEqual(
+            response.status, http.client.OK, f"Error en la petición API a {url}"
+        )
+        self.assertEqual(
+            response.read().decode(), "16", "ERROR MULTIPLY"
         )
 
     def test_api_sqrt(self):
