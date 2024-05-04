@@ -74,7 +74,7 @@ pipeline {
              stage('Results') {
                steps {
                  unstash 'resultUnit'
-                  unstash 'resultTest'   
+                  unstash 'resultRest'   
                  junit 'result*.xml'
                  echo 'Finalizado!!!'
                }
