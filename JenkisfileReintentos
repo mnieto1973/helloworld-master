@@ -69,10 +69,7 @@ pipeline {
                                 retryCount++
                                 echo "Error de tiempo de espera detectado, reintentando (${retryCount}/${maxRetries})"
                                 throw err // Lanzar de nuevo el error para que se ejecute el reintentar
-                            } else {
-                                // Otro tipo de error, no reintentar
-                                error "Error en el paso que no es de tiempo de espera: ${err}"
-                            }
+                            } 
                         }
 
                         // El paso se ejecutó correctamente
