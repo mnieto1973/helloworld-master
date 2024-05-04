@@ -35,6 +35,8 @@ pipeline {
                          sh '''
                    export PYTHONPATH=.:$PYTHONPATH
                    pytest --junitxml=result.unit.xml test/unit
+                  stash includes: 'result.unit.xml', name: 'resultUnit'
+        
                   '''
                    }
                
@@ -54,6 +56,7 @@ pipeline {
                          start java -jar C:\\desarrollo\\librerias\\wiremock\\wiremock-standalone-3.5.4.jar --verbose --port 9090 --root-dir test\\wiremock
                         set PYTHONPATH=%WORKSPACE%
                         pytest --junitxml=result.rest.xml test/rest
+                        stash includes: 'result.rest.xml', name: 'resultRest'
                   '''
                            
                        
@@ -69,6 +72,8 @@ pipeline {
             
              stage('Results') {
                steps {
+                 unstash 'resultUnit'
+                  unstash 'resultTest'   
                  junit 'result*.xml'
                  echo 'Finalizado!!!'
                }
