@@ -38,6 +38,7 @@ pipeline {
                    export PYTHONPATH=.:$PYTHONPATH
                    pytest --junitxml=result.unit.xml test/unit
                   '''
+                  stash includes: 'result.unit.xml', name: 'resultUnit'
                    }
                
                }
@@ -57,6 +58,7 @@ pipeline {
                         set PYTHONPATH=%WORKSPACE%
                         pytest --junitxml=result.rest.xml test/rest
                   '''
+                    stash includes: 'result.rest.xml', name: 'resultRest'    
                            }
                        
                        
@@ -71,6 +73,8 @@ pipeline {
             
              stage('Results') {
                steps {
+                 unstash 'resultUnit'
+                  unstash 'resultRest' 
                  junit 'result*.xml'
                  echo 'Finalizado!!!'
                }
