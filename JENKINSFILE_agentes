@@ -29,7 +29,7 @@ pipeline {
          }
                steps {
                    catchError(buildResult:'UNSTABLE',stageResult:'FAILURE'){
-                   
+                   echo workspace
                          sh '''
                    whoami
                    hostname
@@ -51,7 +51,7 @@ pipeline {
                steps {
                    catchError(buildResult:'UNSTABLE',stageResult:'FAILURE'){
                     
-                           
+                           echo workspace
                         bat '''
                              whoami
                              hostname   
