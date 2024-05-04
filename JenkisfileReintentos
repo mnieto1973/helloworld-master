@@ -58,9 +58,10 @@ pipeline {
 
                     retry(maxRetries) {
                          echo workspace
-                         sh 'whoami'
-                         sh 'hostname'
+                        
                         bat '''
+                         whoami
+                         hostname
                          set FLASK_APP=app\\api.py
                          start flask run
                          start java -jar C:\\desarrollo\\librerias\\wiremock\\wiremock-standalone-3.5.4.jar --verbose --port 9090 --root-dir test\\wiremock
