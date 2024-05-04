@@ -2,9 +2,7 @@ pipeline {
     agent {
         label 'windows'
     }
-
      stages {
-
          stage('Get Code') {
            steps {
               git 'https://github.com/mnieto1973/helloworld-master'
@@ -23,7 +21,6 @@ pipeline {
            }
            
         }
-
         stage('Tests'){
             parallel{
                  stage('Unit') {
@@ -39,7 +36,7 @@ pipeline {
         
                   '''
                     stash includes: 'result.unit.xml', name: 'resultUnit'
-                    
+                   }
                
                }
             }
@@ -60,11 +57,12 @@ pipeline {
                             
                       '''
                        stash includes: 'result.rest.xml', name: 'resultRest'    
-                      
+                       
+                       
+                   }
                
                }
             }
-
             }
         }
         
@@ -78,5 +76,7 @@ pipeline {
                }
             }
      }
+
+}
 
 
