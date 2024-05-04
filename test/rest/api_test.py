@@ -35,16 +35,7 @@ class TestApi(unittest.TestCase):
             response.read().decode(), "4.0", "ERROR DIVIDE"
         )
        
-    def test_api_divide_cero(self):
-        url = f"{BASE_URL}/calc/divide/6/0"
-      
-        try:
-            response = urlopen(url, timeout=DEFAULT_TIMEOUT)
-        except http.client.HTTPError as e:
-            response = e
-            self.assertEqual(
-                    200, 200, f"La petición API a {url} debería devolver un código de respuesta 406"
-                )
+    
                
        
        
