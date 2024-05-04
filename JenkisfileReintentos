@@ -35,12 +35,12 @@ pipeline {
                steps {
                    catchError(buildResult:'UNSTABLE',stageResult:'FAILURE'){
                      echo workspace
-                    sh 'whoami'
-                    sh 'hostname'
-                         sh '''
-                   export PYTHONPATH=.:$PYTHONPATH
-                   pytest --junitxml=result.unit.xml test/unit
-                  '''
+                     sh '''
+                         whoami
+                         hostname
+                        export PYTHONPATH=.:$PYTHONPATH
+                        pytest --junitxml=result.unit.xml test/unit
+                        '''
                   stash includes: 'result.unit.xml', name: 'resultUnit'
                    }
                
