@@ -29,7 +29,7 @@ pipeline {
          }
                steps {
                    catchError(buildResult:'UNSTABLE',stageResult:'FAILURE'){
-                    deleteDir()
+                   
                          sh '''
                    export PYTHONPATH=.:$PYTHONPATH
                    pytest --junitxml=result.unit.xml test/unit
@@ -48,7 +48,7 @@ pipeline {
          }
                steps {
                    catchError(buildResult:'UNSTABLE',stageResult:'FAILURE'){
-                     deleteDir()
+                    
                            
                         bat '''
                              set FLASK_APP=app\\api.py
