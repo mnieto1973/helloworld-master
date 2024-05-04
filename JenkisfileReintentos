@@ -48,9 +48,13 @@ pipeline {
              label 'windows'
          }
                steps {
-                   catchError(buildResult:'UNSTABLE',stageResult:'FAILURE'){
-                         
-                  bat '''
+                script {
+                    def maxRetries = 3
+                    def retryCount = 0
+                    def success = false
+
+                    retry(maxRetries) {
+                        bat '''
                          set FLASK_APP=app\\api.py
                          start flask run
                          start java -jar C:\\desarrollo\\librerias\\wiremock\\wiremock-standalone-3.5.4.jar --verbose --port 9090 --root-dir test\\wiremock
@@ -59,12 +63,28 @@ pipeline {
                   '''   
                   
                     stash includes: 'result.rest.xml', name: 'resultRest'    
-                          
-                       
-                       
-                   }
-               
-               }
+                        catchError { err ->
+                            if (err instanceof hudson.remoting.RequestAbortedException) {
+                                // Captura el error de tiempo de espera y reintentar
+                                retryCount++
+                                echo "Error de tiempo de espera detectado, reintentando (${retryCount}/${maxRetries})"
+                                throw err // Lanzar de nuevo el error para que se ejecute el reintentar
+                            } else {
+                                // Otro tipo de error, no reintentar
+                                error "Error en el paso que no es de tiempo de espera: ${err}"
+                            }
+                        }
+
+                        // El paso se ejecutó correctamente
+                        success = true
+                    }
+
+                    if (!success) {
+                        error "El paso no se pudo completar después de $maxRetries reintentos."
+                    }
+                }
+            }
+
             }
 
             }
