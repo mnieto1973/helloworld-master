@@ -19,7 +19,7 @@ pipeline {
               echo workspace
               sh 'whoami'
               sh 'hostname'
-              sh 'ifconfig'
+             
               
               
            }
@@ -34,6 +34,9 @@ pipeline {
          }
                steps {
                    catchError(buildResult:'UNSTABLE',stageResult:'FAILURE'){
+                     echo workspace
+                    sh 'whoami'
+                    sh 'hostname'
                          sh '''
                    export PYTHONPATH=.:$PYTHONPATH
                    pytest --junitxml=result.unit.xml test/unit
@@ -54,6 +57,9 @@ pipeline {
                     def success = false
 
                     retry(maxRetries) {
+                         echo workspace
+                         sh 'whoami'
+                         sh 'hostname'
                         bat '''
                          set FLASK_APP=app\\api.py
                          start flask run
