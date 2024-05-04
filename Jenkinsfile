@@ -13,8 +13,8 @@ pipeline {
            steps {
               echo ' Prueba de stage'
               echo workspace
-              bat 'dir'
-              
+              bat'whoami'
+              bat 'hostname' 
            }
            
         }
@@ -23,10 +23,14 @@ pipeline {
                  stage('Unit') {
                steps {
                    catchError(buildResult:'UNSTABLE',stageResult:'FAILURE'){
+                       echo workspace
                          bat '''
-                   set PYTHONPATH=%WORKSPACE%
-                   pytest --junitxml=result.unit.xml test/unit
-                  '''
+                           whoami
+                           hotname
+                           set PYTHONPATH=%WORKSPACE%
+                           pytest --junitxml=result.unit.xml test/unit
+                         
+                          '''
                    }
                
                }
@@ -34,12 +38,16 @@ pipeline {
                 stage('Rest') {
                steps {
                    catchError(buildResult:'UNSTABLE',stageResult:'FAILURE'){
+                        echo workspace
                          bat '''
+                          whoami
+                           hotname
                          set FLASK_APP=app\\api.py
                          start flask run
                          start java -jar C:\\desarrollo\\librerias\\wiremock\\wiremock-standalone-3.5.4.jar --verbose --port 9090 --root-dir test\\wiremock
                         set PYTHONPATH=%WORKSPACE%
                         pytest --junitxml=result.rest.xml test/rest
+                        
                   '''
                    }
                
