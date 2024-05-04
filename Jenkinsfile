@@ -18,7 +18,7 @@ pipeline {
            }
            
         }
-        stage('Tests'){
+        stage('Unit'){
             parallel{
                  stage('Unit') {
                steps {
@@ -35,7 +35,7 @@ pipeline {
                
                }
             }
-                stage('Rest') {
+                stage('Service') {
                steps {
                    catchError(buildResult:'UNSTABLE',stageResult:'FAILURE'){
                         echo workspace
@@ -57,7 +57,7 @@ pipeline {
         }
         
             
-             stage('Results') {
+             stage('Junit') {
                steps {
                  junit 'result*.xml'
                  echo 'Finalizado!!!'
