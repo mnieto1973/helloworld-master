@@ -1,6 +1,7 @@
 import http.client
 import os
 import unittest
+from urllib.error import HTTPError
 from urllib.request import urlopen
 
 import pytest
@@ -8,7 +9,7 @@ import pytest
 BASE_URL = "http://localhost:5000"
 BASE_URL_MOCK = "http://localhost:9090"
 DEFAULT_TIMEOUT = 2  # in secs
-
+HEADERS = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 @pytest.mark.api
 class TestApi(unittest.TestCase):
     def setUp(self):
@@ -35,7 +36,23 @@ class TestApi(unittest.TestCase):
             response.read().decode(), "4.0", "ERROR DIVIDE"
         )
        
-    
+    def test_api_divide_divisor_cero(self):
+        
+     try:
+        url = f"{BASE_URL}/calc/divide/8/0"
+        response = urlopen(url, timeout=DEFAULT_TIMEOUT)
+        self.assertEqual(
+            response.status, http.client.OK, f"La petición API a {url} no devolvió un código 200 OK"
+        )
+     except HTTPError as ex:
+        if ex.code == 406:
+            # Manejo del error 406 aquí
+            print(f"Error 406 capturado en la petición API a {url}")
+            # Puedes añadir acciones específicas de manejo del error aquí
+        else:
+            # Otro tipo de manejo de errores
+            print(f"Error inesperado en la petición API a {url}: {ex}")
+            # Puedes añadir acciones para otros tipos de errores aquí
                
        
        

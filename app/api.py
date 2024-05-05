@@ -48,8 +48,7 @@ def divide(op_1, op_2):
         num_1, num_2 = util.convert_to_number(op_1), util.convert_to_number(op_2)
          # Podria dejar que diese error al dividir y capturar el error por el mensaje ,
          #pero prefiero comprobar el divisor antes
-        if num_2==0:
-            return ("El divisor no puede ser 0", 406, HEADERS)
+        
         return ("{}".format(CALCULATOR.divide(num_1, num_2)), http.client.OK, HEADERS)
     except TypeError as e:
-        return (str(e), http.client.BAD_REQUEST, HEADERS)
+        return (str(e), 406, HEADERS)
